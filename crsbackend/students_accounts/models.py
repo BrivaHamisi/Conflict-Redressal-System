@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class ComplaintsForm(models.Model):
@@ -14,6 +15,39 @@ class ComplaintsForm(models.Model):
 
     def __str__(self):
         return self.Complain_description
+
+class RegistrationForm(models.Model):
+    user=models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+
+    First_Name = models.CharField(max_length=100)
+    Last_Name = models.CharField(max_length=100)
+
+    RegNo = models.CharField(max_length=100)
+    Course = models.CharField(max_length=100)
+    Campus = models.CharField(max_length=100)
+    Phone_Number = models.CharField(max_length=100)
+    Email = models.CharField(max_length=100)
+    Department = models.CharField(max_length=100)
+    Password = models.CharField(max_length=100)
+    Confirm_Password = models.CharField(max_length=100)
+
+
+# class RegistrationForm(models.Model):
+#     RegNo = models.CharField(max_length=100)
+#     First_Name = models.CharField(max_length=100)
+#     Last_Name = models.CharField(max_length=100)
+#     Course = models.CharField(max_length=100)
+#     Campus = models.CharField(max_length=100)
+#     Phone_Number = models.CharField(max_length=100)
+#     Email = models.CharField(max_length=100)
+#     Department = models.CharField(max_length=100)
+#     Password = models.CharField(max_length=100)
+#     Confirm_Password = models.CharField(max_length=100)
+
+#     def __str__(self):
+#         return self.RegNo
+
+
 
 # class Customer(models.Model):
 #     user = models.OneToOneField(User, null=True,blank = True, on_delete=models.CASCADE)

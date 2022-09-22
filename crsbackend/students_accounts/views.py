@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse
-from .models import ComplaintsForm
-from .serializers import ComplaintsFormSerializer
+from .models import ComplaintsForm, RegistrationForm
+from .serializers import ComplaintsFormSerializer, UserSerializer
 from django.http import JsonResponse
 from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view
@@ -17,6 +17,10 @@ class ComplaitsListViewset(viewsets.ModelViewSet):
 	queryset = ComplaintsForm.objects.all()
 	serializer_class = ComplaintsFormSerializer
 	authentication_classes = (TokenAuthentication,)
+
+class UserViewSet(viewsets.ModelViewSet):
+	queryset = RegistrationForm.objects.all()
+	serializer_class = UserSerializer
 	
 
 
