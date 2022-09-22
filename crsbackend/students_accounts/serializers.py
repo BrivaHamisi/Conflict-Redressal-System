@@ -9,6 +9,7 @@ class ComplaintsFormSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    
 	class Meta:
 		model = RegistrationForm
 		fields = ['id','First_Name', 'Last_Name', 'RegNo', 'Course', 'Campus', 'Department', 'Phone_Number', 'Email', 'Password','Confirm_Password']
