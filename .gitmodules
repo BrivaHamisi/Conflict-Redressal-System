@@ -1,0 +1,3 @@
+[submodule "crsfrontend"]
+	path = crsfrontend
+	url = https://github.com/BrivaHamisi/CRM-Frontend.git
