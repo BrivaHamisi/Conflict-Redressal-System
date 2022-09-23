@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse
 from .models import ComplaintsForm, RegistrationForm
-from .serializers import ComplaintsFormSerializer, UserSerializer
+from .serializers import ComplaintsFormSerializer, UserSerializer, RegisterSerializer
 from django.http import JsonResponse
 from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view
@@ -12,6 +12,7 @@ from rest_framework import mixins
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.models import User
 
 class ComplaitsListViewset(viewsets.ModelViewSet):
 	queryset = ComplaintsForm.objects.all()
@@ -19,8 +20,12 @@ class ComplaitsListViewset(viewsets.ModelViewSet):
 	authentication_classes = (TokenAuthentication,)
 
 class UserViewSet(viewsets.ModelViewSet):
-	queryset = RegistrationForm.objects.all()
+	queryset = User.objects.all()
 	serializer_class = UserSerializer
+
+class RegisterViewSet(viewsets.ModelViewSet):
+	queryset = RegistrationForm.objects.all()
+	serializer_class = RegisterSerializer
 	
 
 
