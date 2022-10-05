@@ -1,5 +1,6 @@
+from django import views
 from django.urls import path,include
-from students_accounts.views import ComplaitsListViewset, UserViewSet
+from students_accounts.views import ComplaitsListViewset, UserViewSet, userlogin
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -9,6 +10,7 @@ router.register('register', UserViewSet, basename='register')
 
 urlpatterns = [
     path('api/', include(router.urls)),
+    path('login/',userlogin)
     # path('complaints/', ComplaintsList.as_view()),
     # path('complaints/<int:id>/', ComplaintsDetails.as_view()),
 

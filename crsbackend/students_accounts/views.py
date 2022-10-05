@@ -14,6 +14,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 
+from . import models
 class ComplaitsListViewset(viewsets.ModelViewSet):
 	queryset = ComplaintsForm.objects.all()
 	serializer_class = ComplaintsFormSerializer
@@ -28,6 +29,17 @@ class RegisterViewSet(viewsets.ModelViewSet):
 	serializer_class = RegisterSerializer
 	
 
+def userlogin(request):
+	email = request.POST['email']
+	password = request.POST['password']
+	userdata = models.RegistrationForm.objects.get(Email = email, Password = password)
+
+	if userdata:
+		return JsonResponse({'bool':True, 'userId':userdata.id})
+	else:
+		return(JsonResponse({'bool':False}))
+
+	
 
 
 # class ComplaintsList(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
