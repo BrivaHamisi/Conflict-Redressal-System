@@ -13,8 +13,10 @@ from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
 
 from . import models
+ 
 class ComplaitsListViewset(viewsets.ModelViewSet):
 	queryset = ComplaintsForm.objects.all()
 	serializer_class = ComplaintsFormSerializer
@@ -28,10 +30,10 @@ class RegisterViewSet(viewsets.ModelViewSet):
 	queryset = RegistrationForm.objects.all()
 	serializer_class = RegisterSerializer
 	
-
+@csrf_exempt
 def userlogin(request):
-	email = request.POST['email']
-	password = request.POST['password']
+	email = request.POST['Email']
+	password = request.POST['Password']
 	userdata = models.RegistrationForm.objects.get(Email = email, Password = password)
 
 	if userdata:
