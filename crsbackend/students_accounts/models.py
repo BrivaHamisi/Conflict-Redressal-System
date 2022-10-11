@@ -1,4 +1,5 @@
 from operator import mod
+from unittest import mock
 from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import User
@@ -38,8 +39,14 @@ class FeedbackForm(models.Model):
     ComplaintId = models.CharField(null = True, max_length=50)
     AdminId = models.CharField(null=True, max_length=50)
     Content = models.CharField(null=True, max_length=500)
+    ActionTaken = models.CharField(null=True, max_length=500)
     Documents = models.CharField(null=True, max_length=50)
 
+
+class AppealForm(models.Model):
+    feebackId = models.CharField(null=True, max_length=50)
+    Decision_Not_fair = models.CharField(null=True, max_length=500)
+    What_To_Happen = models.CharField(null=True, max_length=500)
 
 
 
