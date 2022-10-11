@@ -47,6 +47,7 @@ class AppealForm(models.Model):
     feebackId = models.CharField(null=True, max_length=50)
     Decision_Not_fair = models.CharField(null=True, max_length=500)
     What_To_Happen = models.CharField(null=True, max_length=500)
+    Documents = models.CharField(null=True, max_length=50)
 
 
 
