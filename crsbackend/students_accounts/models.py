@@ -1,3 +1,5 @@
+from operator import mod
+from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -30,6 +32,15 @@ class RegistrationForm(models.Model):
     Department = models.CharField(max_length=100, null=True)
     Password = models.CharField(max_length=100, null=True)
     Confirm_Password = models.CharField(max_length=100, null=True)
+
+class FeedbackForm(models.Model):
+    AppealId = models.CharField(null=True, max_length=50)
+    ComplaintId = models.CharField(null = True, max_length=50)
+    AdminId = models.CharField(null=True, max_length=50)
+    Content = models.CharField(null=True, max_length=500)
+    Documents = models.CharField(null=True, max_length=50)
+
+
 
 
 # class RegistrationForm(models.Model):
