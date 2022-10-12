@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class ComplaintsForm(models.Model):
+    # user = models.ForeignKey("RegistrationForm", on_delete=models.DO_NOTHING, null=True, blank=True)
     Complain_description = models.CharField(max_length=100, null=True)
     Events_that_took_Place = models.TextField(max_length=200, null=True)
     Consequence_suffered =models.TextField(max_length=200, null=True)
@@ -18,16 +19,16 @@ class ComplaintsForm(models.Model):
 
 class RegistrationForm(models.Model):
     # user=models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
-    First_Name = models.CharField(max_length=100, null=True)
-    Last_Name = models.CharField(max_length=100, null=True)
-    RegNo = models.CharField(max_length=100, null=True)
-    Course = models.CharField(max_length=100, null=True)
-    Campus = models.CharField(max_length=100, null=True)
-    Phone_Number = models.CharField(max_length=100, null=True)
-    Email = models.CharField(max_length=100, null=True)
-    Department = models.CharField(max_length=100, null=True)
-    Password = models.CharField(max_length=100, null=True)
-    Confirm_Password = models.CharField(max_length=100, null=True)
+    # First_Name = models.CharField(max_length=100, null=True, blank=True)
+    Last_Name = models.CharField(max_length=100, null=True, blank=True)
+    RegNo = models.CharField(max_length=100, null=True, blank=True)
+    Course = models.CharField(max_length=100, null=True, blank=True)
+    Campus = models.CharField(max_length=100, null=True, blank=True)
+    Phone_Number = models.CharField(max_length=100, null=True, blank=True)
+    Email = models.CharField(max_length=100, null=True, blank=True)
+    Department = models.CharField(max_length=100, null=True, blank=True)
+    Password = models.CharField(max_length=100, null=True, blank=True)
+    Confirm_Password = models.CharField(max_length=100, null=True, blank=True)
 
 class AppealForm(models.Model):
     Decision_Not_fair = models.CharField(null=True, max_length=500)
