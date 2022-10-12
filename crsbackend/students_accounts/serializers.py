@@ -29,10 +29,72 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ComplainantSerializer(serializers.ModelSerializer):
+	user = UserSerializer()
+
 	class Meta:
+		depth = 1
 		model = Complainant
 		fields = '__all__'
-		exclude = []
+
+	
+	def create(self, validated_data):
+		user = validated_data["user"]
+		usr = UserSerializer.create(user)
+		validated_data["user"] = usr.id
+		return super().create(validated_data)
+
+# class ComplainantSerializer(serializers.ModelSerializer):
+# 	username = serializers.CharField()
+# 	email = serializers.EmailField()
+# 	first_name = serializers.CharField()
+# 	last_name = serializers.CharField()
+# 	password = serializers.CharField()
+
+# 	class Meta:
+# 		depth = 1
+# 		model = Complainant
+# 		fields = '__all__'
+# 		extra_kwargs = {
+# 			'password': {
+#                 'write_only': True,
+#                 'required': True
+#             },
+# 			'username': {'read_only': False, 'required': True },
+# 			'email': {'read_only': False, 'required': True },
+# 			'first_name': {'read_only': False, 'required': True },
+# 			'last_name': {'read_only': False, 'required': True },
+# 			'user': {'read_only':True},
+# 		}
+
+# 	def get_username(self, obj):
+# 		pass
+
+# 	def create_user(self, data):
+# 		username = data.get("username")
+# 		email = data.get("email")
+# 		first_name = data.get("first_name")
+# 		last_name = data.get("last_name")
+# 		password = data.get("password")
+# 		user = None
+# 		if username and email and first_name and last_name and password:
+# 			user = User.objects.create(username=username, email=email, first_name=first_name, 
+# 										last_name=last_name, password=password)
+# 		return user
+
+# 	def create(self, validated_data):
+# 		username = validated_data["username"]
+# 		email = validated_data["email"]
+# 		first_name = validated_data["first_name"]
+# 		last_name = validated_data["last_name"]
+# 		password = validated_data["password"]
+# 		del validated_data["username"]
+# 		del validated_data["email"]
+# 		del validated_data["first_name"]
+# 		del validated_data["last_name"]
+# 		del validated_data["password"]
+# 		user = self.create_user({ "username":username, "email":email, "first_name":first_name, "last_name":last_name, "password":password })
+# 		validated_data["user"] = user
+# 		return super().create(validated_data)
 
 
 class ComplaintSerializer(serializers.ModelSerializer):
