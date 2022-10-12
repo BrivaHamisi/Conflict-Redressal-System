@@ -14,7 +14,7 @@ class ComplaintsForm(models.Model):
     status_of_complaint = models.TextField(max_length=25, null=True)
 
     def __str__(self):
-        return self.Complain_description
+        return f"{self.Complain_description}"
 
 class RegistrationForm(models.Model):
     # user=models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
