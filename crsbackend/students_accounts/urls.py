@@ -1,20 +1,17 @@
-from django import views
-from django.urls import path,include
-from students_accounts.views import ComplaitsListViewset, UserViewSet, userlogin
+from django.urls import path, include
+from rest_framework.authtoken import views
 from rest_framework.routers import DefaultRouter
+from students_accounts.views import UserViewSet, ComplainantViewset, ComplaintViewset, FeedbackViewset, AppealViewset
 
 router = DefaultRouter()
-router.register('complaints', ComplaitsListViewset, basename='complaints')
+
 router.register('users', UserViewSet, basename='users')
-router.register('register', UserViewSet, basename='register')
+router.register('complainants', ComplainantViewset, basename='complainants')
+router.register('complaints', ComplaintViewset, basename='complaints')
+router.register('feedbacks', FeedbackViewset, basename='feedbacks')
+router.register('appeals', AppealViewset, basename='appeals')
+# router.register('token-auth', views.obtain_auth_token)
 
 urlpatterns = [
     path('api/', include(router.urls)),
-    path('login/',userlogin)
-    # path('complaints/', ComplaintsList.as_view()),
-    # path('complaints/<int:id>/', ComplaintsDetails.as_view()),
-
-    # path('complaints', AllComplaints_list),
-    # path('complaints/<int:pk>/', complaints_details),
-
 ]

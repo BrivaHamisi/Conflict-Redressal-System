@@ -1,26 +1,26 @@
 from rest_framework import serializers 
-from .models import ComplaintsForm, RegistrationForm
 from django.contrib.auth.models import User
 from rest_framework.authtoken.views import Token
-
-class ComplaintsFormSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ComplaintsForm
-        fields = '__all__'
-        # fields = ('id','Complain_description', 'Events_that_took_Place', 'Consequence_suffered', 'Spoken_to_someone','Dissatisfied_with_Informal_complaint','evidence', 'recommendation', 'date', 'status_of_complaint')
+from .models import Complainant, Complaint, Feedback, Appeal
 
 
 class UserSerializer(serializers.ModelSerializer):
+	is_admin = serializers.SerializerMethodField("get_is_admin")
+
 	class Meta:
 		model = User
-		fields = ['id', 'username', 'password', 'first_name', 'last_name', 'email']
+		fields = ['id', 'username', 'password', 'first_name', 'last_name', 'email', 'is_staff', 'is_admin']
 
-		extra_kwargs= {
-            'password':{
-                'write_only':True,
-                'required':True
-            }
+		extra_kwargs = {
+            'password': {
+                'write_only': True,
+                'required': True
+            },
+			'is_staff': {'read_only':True}
         }
+
+	def get_is_admin(self, obj):
+		return obj.is_superuser
 
 	def create(self, validated_data):
 		user = User.objects.create_user(**validated_data)
@@ -28,7 +28,29 @@ class UserSerializer(serializers.ModelSerializer):
 		return user
 
 
-class RegisterSerializer(serializers.ModelSerializer):
+class ComplainantSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = RegistrationForm
-		fields = ['id','RegNo', 'Course', 'Campus', 'Department', 'Phone_Number']
+		model = Complainant
+		fields = '__all__'
+		exclude = []
+
+
+class ComplaintSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Complaint
+		fields = '__all__'
+		exclude = []
+
+
+class FeedbackSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Feedback
+		fields = '__all__'
+		exclude = []
+
+	
+class AppealSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Appeal
+		fields = '__all__'
+		exclude = []
