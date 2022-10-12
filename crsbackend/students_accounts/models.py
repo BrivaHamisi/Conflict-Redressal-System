@@ -1,6 +1,3 @@
-from operator import mod
-from unittest import mock
-from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -20,11 +17,9 @@ class ComplaintsForm(models.Model):
         return self.Complain_description
 
 class RegistrationForm(models.Model):
-    user=models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
-
+    # user=models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     First_Name = models.CharField(max_length=100, null=True)
     Last_Name = models.CharField(max_length=100, null=True)
-
     RegNo = models.CharField(max_length=100, null=True)
     Course = models.CharField(max_length=100, null=True)
     Campus = models.CharField(max_length=100, null=True)
@@ -34,21 +29,19 @@ class RegistrationForm(models.Model):
     Password = models.CharField(max_length=100, null=True)
     Confirm_Password = models.CharField(max_length=100, null=True)
 
-class FeedbackForm(models.Model):
-    AppealId = models.CharField(null=True, max_length=50)
-    ComplaintId = models.CharField(null = True, max_length=50)
-    AdminId = models.CharField(null=True, max_length=50)
-    Content = models.CharField(null=True, max_length=500)
-    ActionTaken = models.CharField(null=True, max_length=500)
-    Documents = models.CharField(null=True, max_length=50)
-
-
 class AppealForm(models.Model):
-    feebackId = models.CharField(null=True, max_length=50)
     Decision_Not_fair = models.CharField(null=True, max_length=500)
     What_To_Happen = models.CharField(null=True, max_length=500)
     Documents = models.CharField(null=True, max_length=50)
 
+class FeedbackForm(models.Model):
+    AppealId = models.OneToOneField(AppealForm, on_delete=models.DO_NOTHING)
+    ComplaintId = models.ForeignKey(ComplaintsForm, on_delete=models.DO_NOTHING)
+    AdminId = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    Content = models.CharField(null=True, max_length=500)
+    ActionTaken = models.CharField(null=True, max_length=500)
+    Documents = models.CharField(null=True, max_length=50)
+    feedback_status = models.CharField(null=True, max_length=50)
 
 
 # class RegistrationForm(models.Model):
