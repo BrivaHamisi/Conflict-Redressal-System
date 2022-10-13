@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework.authentication import TokenAuthentication
 
-from .models import Complainant, Complaint, Feedback, Appeal
-from .serializers import UserSerializer, ComplainantSerializer, ComplaintSerializer, FeedbackSerializer, AppealSerializer
+from .models import Complainant, Complaint, Feedback, Appeal, GeneralIssuesUpdate
+from .serializers import UserSerializer, ComplainantSerializer, ComplaintSerializer, FeedbackSerializer, AppealSerializer, GeneralIssuesUpdateSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -40,5 +40,11 @@ class FeedbackViewset(viewsets.ModelViewSet):
 class AppealViewset(viewsets.ModelViewSet):
 	queryset = Appeal.objects.all()
 	serializer_class = AppealSerializer
+	# authentication_classes = (TokenAuthentication,)
+
+
+class GeneralIssuesViewset(viewsets.ModelViewSet):
+	queryset = GeneralIssuesUpdate.objects.all()
+	serializer_class = GeneralIssuesUpdateSerializer
 	# authentication_classes = (TokenAuthentication,)
 

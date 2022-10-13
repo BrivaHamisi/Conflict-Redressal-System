@@ -1,7 +1,7 @@
 from rest_framework import serializers 
 from django.contrib.auth.models import User
 from rest_framework.authtoken.views import Token
-from .models import Complainant, Complaint, Feedback, Appeal
+from .models import Complainant, Complaint, Feedback, Appeal, GeneralIssuesUpdate
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -114,5 +114,12 @@ class FeedbackSerializer(serializers.ModelSerializer):
 class AppealSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Appeal
+		fields = '__all__'
+		exclude = []
+
+
+class GeneralIssuesUpdateSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = GeneralIssuesUpdate
 		fields = '__all__'
 		exclude = []
