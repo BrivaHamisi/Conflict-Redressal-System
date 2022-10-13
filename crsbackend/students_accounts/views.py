@@ -1,115 +1,50 @@
-from django.shortcuts import render, HttpResponse
-from .models import ComplaintsForm, RegistrationForm
-from .serializers import ComplaintsFormSerializer, UserSerializer, RegisterSerializer
-from django.http import JsonResponse
-from rest_framework.parsers import JSONParser
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.decorators import APIView
-from rest_framework import generics
-from rest_framework import mixins
 from rest_framework import viewsets
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import permissions
+from rest_framework.response import Response
 from django.contrib.auth.models import User
-from django.views.decorators.csrf import csrf_exempt
+from rest_framework.authentication import TokenAuthentication
 
-from . import models
- 
-class ComplaitsListViewset(viewsets.ModelViewSet):
-	queryset = ComplaintsForm.objects.all()
-	serializer_class = ComplaintsFormSerializer
-	authentication_classes = (TokenAuthentication,)
+from .models import Complainant, Complaint, Feedback, Appeal, GeneralIssuesUpdate
+from .serializers import UserSerializer, ComplainantSerializer, ComplaintSerializer, FeedbackSerializer, AppealSerializer, GeneralIssuesUpdateSerializer
+
 
 class UserViewSet(viewsets.ModelViewSet):
 	queryset = User.objects.all()
 	serializer_class = UserSerializer
+	# authentication_classes = (TokenAuthentication,)
 
-class RegisterViewSet(viewsets.ModelViewSet):
-	queryset = RegistrationForm.objects.all()
-	serializer_class = RegisterSerializer
-	
-@csrf_exempt
-def userlogin(request):
-	email = request.POST['Email']
-	password = request.POST['Password']
-	userdata = models.RegistrationForm.objects.get(Email = email, Password = password)
-
-	if userdata:
-		return JsonResponse({'bool':True, 'userId':userdata.id})
-	else:
-		return(JsonResponse({'bool':False}))
-
-	
+	def list(self, request):
+		queryset = User.objects.all()
+		serializer = UserSerializer(queryset, many=True)
+		return Response(serializer.data)
 
 
-# class ComplaintsList(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
-# 	queryset = ComplaintsForm.objects.all()
-# 	serializer_class = ComplaintsFormSerializer
+class ComplainantViewset(viewsets.ModelViewSet):
+	queryset = Complainant.objects.all()
+	serializer_class = ComplainantSerializer
+	# authentication_classes = (TokenAuthentication,)
+ 
 
-# 	def get(self, request):
-# 		return self.list(request)
-	
-# 	def post(self, request):
-# 		return self.create(request)
-	
-
-# class ComplaintsDetails(generics.GenericAPIView, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
-# 	queryset = ComplaintsForm.objects.all()
-# 	serializer_class = ComplaintsFormSerializer
-
-# 	lookup_field = 'id'
-
-# 	def get(self, request, id):
-# 		return self.retrieve(request, id=id)
-
-	
-# 	def put(self, request, id):
-# 		return self.update(request, id=id)
-	
-# 	def delete(self, request, id):
-# 		return self.destroy(request, id=id)
-
-	
+class ComplaintViewset(viewsets.ModelViewSet):
+	queryset = Complaint.objects.all()
+	serializer_class = ComplaintSerializer
+	# authentication_classes = (TokenAuthentication,)
 
 
-
-# Create your views here.
-# @api_view(['GET', 'POST'])
-# def AllComplaints_list(request):
-# 	if request.method == 'GET':
-# 		allcomplaints = ComplaintsForm.objects.all()
-# 		serializer = ComplaintsFormSerializer(allcomplaints, many=True)
-# 		return Response(serializer.data,)
-
-# 	elif request.method == 'POST':
-# 		serializer = ComplaintsFormSerializer(data=request.data)
-# 		if serializer.is_valid():
-# 			serializer.save()
-# 			return Response(serializer.data, status = status.HTTP_201_CREATED)
-# 		return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+class FeedbackViewset(viewsets.ModelViewSet):
+	queryset = Feedback.objects.all()
+	serializer_class = FeedbackSerializer
+	# authentication_classes = (TokenAuthentication,)
 
 
-# @api_view(['GET', 'PUT','DELETE'])
-# def complaints_details(request, pk):
-# 	try:
-# 		complaint = ComplaintsForm.objects.get(pk=pk)
-	
-# 	except ComplaintsForm.DoesNotExist:
-# 		return Response(staus=status.HTTP_400_BAD_REQUEST)
-	
-# 	if request.method == 'GET':
-# 		serializer = ComplaintsFormSerializer(complaint)
-# 		return Response(serializer.data)
+class AppealViewset(viewsets.ModelViewSet):
+	queryset = Appeal.objects.all()
+	serializer_class = AppealSerializer
+	# authentication_classes = (TokenAuthentication,)
 
-# 	elif request.method == 'PUT':
-# 		serializer = ComplaintsFormSerializer(complaint, data=request.data)
-# 		if serializer.is_valid():
-# 			serializer.save()
-# 			return Response(serializer.data)
-# 		return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
-# 	elif request.method == 'DELETE':
-# 		complaint.delete()
-# 		return Response(status=status.HTTP_204_NO_CONTENT)
+class GeneralIssuesViewset(viewsets.ModelViewSet):
+	queryset = GeneralIssuesUpdate.objects.all()
+	serializer_class = GeneralIssuesUpdateSerializer
+	# authentication_classes = (TokenAuthentication,)
+
