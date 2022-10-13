@@ -1,3 +1,4 @@
+from turtle import title
 from django.db import models
 from django.contrib.auth.models import User
 from students_accounts.signals import receiver, post_save # DO NOT REMOVE
@@ -43,3 +44,11 @@ class Appeal(models.Model):
     decision_not_fair = models.CharField(null=True, max_length=500)
     what_to_happen = models.CharField(null=True, max_length=500)
     documents = models.CharField(null=True, max_length=50)
+
+
+class GeneralIssuesUpdate(models.Model):
+    admin = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=False)
+    title = models.CharField(null=True, max_length=100)
+    content = models.CharField(null=True, max_length=500)
+    attached_documents = models.CharField(null=True, max_length=100)
+    date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
