@@ -3,6 +3,8 @@ from rest_framework import permissions
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
 
 from .models import Complainant, Complaint, Feedback, Appeal, GeneralIssuesUpdate
 from .serializers import UserSerializer, ComplainantSerializer, ComplaintSerializer, FeedbackSerializer, AppealSerializer, GeneralIssuesUpdateSerializer
@@ -47,4 +49,11 @@ class GeneralIssuesViewset(viewsets.ModelViewSet):
 	queryset = GeneralIssuesUpdate.objects.all()
 	serializer_class = GeneralIssuesUpdateSerializer
 	# authentication_classes = (TokenAuthentication,)
+
+
+@api_view(['GET'])
+@permission_classes(permissions.IsAuthenticated)
+def user_details(request):
+	usr = UserSerializer(request.user)
+	return Response(usr.data)
 

@@ -35,13 +35,13 @@ class ComplainantSerializer(serializers.ModelSerializer):
 		depth = 1
 		model = Complainant
 		fields = '__all__'
-
 	
 	def create(self, validated_data):
-		user = validated_data["user"]
-		usr = UserSerializer.create(user)
-		validated_data["user"] = usr.id
+		user = validated_data.pop("user")
+		instance = User.objects.create_user(**user)
+		validated_data["user"] = instance
 		return super().create(validated_data)
+
 
 # class ComplainantSerializer(serializers.ModelSerializer):
 # 	username = serializers.CharField()

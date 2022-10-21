@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('students_accounts.urls')),
     path('auth/', obtain_auth_token),
+    path('api/auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
