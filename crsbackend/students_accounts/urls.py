@@ -3,7 +3,7 @@ from rest_framework.authtoken import views
 from rest_framework.routers import DefaultRouter
 from students_accounts.views import (
     UserViewSet, ComplainantViewset, ComplaintViewset, FeedbackViewset, 
-    AppealViewset, GeneralIssuesViewset, user_details
+    AppealViewset, GeneralIssuesViewset, user_details, ChangePasswordView
 )
 from knox import views as knox_views
 from . import api
@@ -25,6 +25,9 @@ urlpatterns = [
     path('api/auth/logout/', knox_views.LogoutView.as_view(), name='knox_logout'),
     path('api/auth/logoutall/', knox_views.LogoutAllView.as_view(), name='knox_logoutall'),
     path('api/auth/register/', api.RegisterAPI.as_view(), name="register"),
+
+    path('api/change-password/', ChangePasswordView.as_view(), name='change-password'),
+    path('api/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
 
     path('api/', include(router.urls)),
     path('api/user-details', user_details, name="user_details"),

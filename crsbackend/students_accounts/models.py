@@ -1,7 +1,11 @@
-from turtle import title
 from django.db import models
 from django.contrib.auth.models import User
 from students_accounts.signals import receiver, post_save # DO NOT REMOVE
+
+from django.dispatch import receiver
+from django.urls import reverse
+from django_rest_passwordreset.signals import reset_password_token_created
+from django.core.mail import send_mail  
 
 COLOR_CHOICES = (
     ('submitted','SUBMITTED'),
@@ -61,3 +65,19 @@ class GeneralIssuesUpdate(models.Model):
     content = models.CharField(null=True, max_length=500)
     attached_documents = models.CharField(null=True, max_length=100)
     date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+@receiver(reset_password_token_created)
+def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
+
+    email_plaintext_message = "{}?token={}".format(reverse('password_reset:reset-password-request'), reset_password_token.key)
+
+    send_mail(
+        # title:
+        "Password Reset for {title}".format(title="KU Conflict Redressal System"),
+        # message:
+        email_plaintext_message,
+        # from:
+        "noreply@somehost.local",
+        # to:
+        [reset_password_token.user.email]
+    )
