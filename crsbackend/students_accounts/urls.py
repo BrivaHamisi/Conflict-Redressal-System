@@ -3,7 +3,7 @@ from rest_framework.authtoken import views
 from rest_framework.routers import DefaultRouter
 from students_accounts.views import (
     UserViewSet, ComplainantViewset, ComplaintViewset, FeedbackViewset, 
-    AppealViewset, GeneralIssuesViewset, user_details, ChangePasswordView
+    AppealViewset, GeneralIssuesViewset, user_details, ChangePasswordView, LoggedinUserView
 )
 from knox import views as knox_views
 from . import api

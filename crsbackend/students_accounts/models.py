@@ -63,7 +63,7 @@ class GeneralIssuesUpdate(models.Model):
     admin = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=False)
     title = models.CharField(null=True, max_length=100)
     content = models.CharField(null=True, max_length=500)
-    attached_documents = models.CharField(null=True, max_length=100)
+    attached_documents = models.FileField(upload_to=None, max_length=100)
     date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
 @receiver(reset_password_token_created)

@@ -8,6 +8,8 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated   
 
+from django.contrib.auth import get_user_model
+
 from .models import Complainant, Complaint, Feedback, Appeal, GeneralIssuesUpdate
 from .serializers import UserSerializer, ComplainantSerializer, ComplaintSerializer, FeedbackSerializer, AppealSerializer, GeneralIssuesUpdateSerializer, ChangePasswordSerializer
 
@@ -93,3 +95,9 @@ class ChangePasswordView(generics.UpdateAPIView):
             return Response(response)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class LoggedinUserView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = ComplainantSerializer
+    queryset = get_user_model().objects.all()

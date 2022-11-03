@@ -1,3 +1,4 @@
+from requests import request
 from rest_framework import serializers 
 from django.contrib.auth.models import User
 from rest_framework.authtoken.views import Token
@@ -79,3 +80,8 @@ class ChangePasswordSerializer(serializers.Serializer):
     """
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
+
+class LoggedinUser(serializers.ModelSerializer):
+	user = ComplainantSerializer()
+	fields = '__all__'
+	
