@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_rest_passwordreset',
     'knox',
+    'django_filters',
 
     'crsbackend',
     'students_accounts',
