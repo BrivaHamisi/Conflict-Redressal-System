@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from rest_framework.authtoken.views import Token
 from .models import Complainant, Complaint, Feedback, Appeal, GeneralIssuesUpdate
 
-
 class UserSerializer(serializers.ModelSerializer):
 	is_admin = serializers.SerializerMethodField("get_is_admin")
 
@@ -49,7 +48,6 @@ class ComplaintSerializer(serializers.ModelSerializer):
 		model = Complaint
 		fields = '__all__'
 		exclude = []
-
 
 class FeedbackSerializer(serializers.ModelSerializer):
 	class Meta:

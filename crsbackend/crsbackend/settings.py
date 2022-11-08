@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_rest_passwordreset',
     'knox',
     'django_filters',
+    'import_export',
 
     'crsbackend',
     'students_accounts',

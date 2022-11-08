@@ -12,6 +12,7 @@ from django.contrib.auth import get_user_model
 
 from .models import Complainant, Complaint, Feedback, Appeal, GeneralIssuesUpdate
 from .serializers import UserSerializer, ComplainantSerializer, ComplaintSerializer, FeedbackSerializer, AppealSerializer, GeneralIssuesUpdateSerializer, ChangePasswordSerializer
+from .filters import *
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -32,9 +33,10 @@ class ComplainantViewset(viewsets.ModelViewSet):
  
 
 class ComplaintViewset(viewsets.ModelViewSet):
-	queryset = Complaint.objects.all()
-	serializer_class = ComplaintSerializer
+    queryset = Complaint.objects.all()
+    serializer_class = ComplaintSerializer
 	# authentication_classes = (TokenAuthentication,)
+    
 
 
 class FeedbackViewset(viewsets.ModelViewSet):
