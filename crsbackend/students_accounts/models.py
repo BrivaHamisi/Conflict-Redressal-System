@@ -22,6 +22,9 @@ class Complainant(models.Model):
     campus = models.CharField(max_length=100, null=True, blank=True)
     phone_number = models.CharField(max_length=100, null=True, blank=True)
     department = models.CharField(max_length=100, null=True, blank=True)
+    
+    def __str__(self):
+        return f"{self.user}"
 
     
 
@@ -50,13 +53,21 @@ class Feedback(models.Model):
     documents = models.CharField(null=True, max_length=50)
     feedback_status = models.CharField(null=True, max_length=50)
 
+    def __str__(self):
+        return f"{self.complaint}"
+
+    
+
 
 class Appeal(models.Model):
     user = models.ForeignKey(Complainant, on_delete=models.DO_NOTHING)
     feedback = models.OneToOneField(Feedback, on_delete=models.DO_NOTHING)
     decision_not_fair = models.CharField(null=True, max_length=500)
     what_to_happen = models.CharField(null=True, max_length=500)
-    documents = models.CharField(null=True, max_length=50)
+    documents = models.FileField(null=True, max_length=50)
+
+    def __str__(self):
+        return f"{self.feedback}"
 
 
 class GeneralIssuesUpdate(models.Model):
