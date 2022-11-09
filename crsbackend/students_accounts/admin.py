@@ -12,6 +12,7 @@ from import_export.admin import ImportExportModelAdmin
 @admin.register(Complaint)
 class Complaint(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ("user", "description", "date", "status_of_complaint")
+    list_filter = ["status_of_complaint"]
     pass
 
 @admin.register(Complainant)

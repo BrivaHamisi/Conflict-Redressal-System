@@ -44,10 +44,34 @@ class ComplainantSerializer(serializers.ModelSerializer):
 
 
 class ComplaintSerializer(serializers.ModelSerializer):
+	complainant = serializers.SerializerMethodField("get_complainant", read_only=True)
+
 	class Meta:
 		model = Complaint
 		fields = '__all__'
-		exclude = []
+		extra_kwargs = {
+            'user': {
+                'write_only': True,
+            },
+        }
+
+	def create(self, validated_data):
+		user = validated_data.pop("user")
+		if type(user) == Complainant:
+			pass
+		elif type(user) in (int, str):
+			print(user)
+			user = Complainant.objects.get(user__id=int(user))
+			print(user)
+		validated_data["user"] = user
+		return super().create(validated_data)
+
+	def get_complainant(self, obj):
+		if obj.user is None:
+			return None
+		return ComplainantSerializer(obj.user).data
+
+
 
 class FeedbackSerializer(serializers.ModelSerializer):
 	class Meta:

@@ -35,8 +35,25 @@ class ComplainantViewset(viewsets.ModelViewSet):
 class ComplaintViewset(viewsets.ModelViewSet):
     queryset = Complaint.objects.all()
     serializer_class = ComplaintSerializer
-	# authentication_classes = (TokenAuthentication,)
-    
+    # authentication_classes = (TokenAuthentication,)
+
+    def get_queryset(self):
+        curr_user = self.request.query_params.get("current_user")
+        user_id = self.request.query_params.get("user_id")
+        queryset = Complaint.objects.all()
+        if curr_user is not None:
+            queryset = queryset.filter(user__user__id=self.request.user.id)
+        elif user_id is not None:
+            queryset = queryset.filter(user__user__id=user_id)
+
+        return queryset
+
+    def create(self, request, *args, **kwargs):
+        uid = request.data.get("user")
+        if type(uid) == int:
+            complainant = Complainant.objects.get(user__id=uid)
+            request.data["user"] = complainant.id
+        return super().create(request, *args, **kwargs)
 
 
 class FeedbackViewset(viewsets.ModelViewSet):
