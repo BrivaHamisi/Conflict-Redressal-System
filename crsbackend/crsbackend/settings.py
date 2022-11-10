@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'knox',
     'django_filters',
     'import_export',
+    'rest_framework.authtoken',
 
     'crsbackend',
     'students_accounts',

@@ -35,6 +35,11 @@ class ComplainantSerializer(serializers.ModelSerializer):
 		depth = 1
 		model = Complainant
 		fields = '__all__'
+		extra_kwargs = {
+            'user': {
+                'read_only': True,
+            },
+        }
 	
 	def create(self, validated_data):
 		user = validated_data.pop("user")
