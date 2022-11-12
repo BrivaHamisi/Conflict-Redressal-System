@@ -300,3 +300,11 @@ JAZZMIN_SETTINGS = {
     # Add a language dropdown into the admin
     # "language_chooser": True,
 }
+
+# SMTP Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'brivahamisi@gmail.com'
+EMAIL_HOST_PASSWORD = '37013719;'

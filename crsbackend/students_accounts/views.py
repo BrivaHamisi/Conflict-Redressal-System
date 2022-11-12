@@ -120,3 +120,18 @@ class LoggedinUserView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = ComplainantSerializer
     queryset = get_user_model().objects.all()
+
+
+from django.core.mail import EmailMessage
+from django.conf import settings
+from django.template.loader import render_to_string
+
+def sendEmails(request):
+    email = EmailMessage(
+        'Complaint Successfully Submitted',
+        'body',
+        settings.EMAIL_HOST_USER,
+        [request.user.email],
+    )
+    email.fail_silently= False
+    email.send()
