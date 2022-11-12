@@ -135,3 +135,5 @@ def sendEmails(request):
     )
     email.fail_silently= False
     email.send()
+
+
