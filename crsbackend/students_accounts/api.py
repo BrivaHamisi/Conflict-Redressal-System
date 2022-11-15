@@ -9,6 +9,8 @@ from knox.models import AuthToken
 from knox.views import LoginView as KnoxLoginView
 
 from .serializers import UserSerializer, ComplainantSerializer
+from .models import Complainant
+from .views import sendEmails
 
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = ComplainantSerializer
@@ -21,8 +23,10 @@ class RegisterAPI(generics.GenericAPIView):
         user = serializer.save()
 
         token = AuthToken.objects.create(user)
+        usr = UserSerializer(user, context=self.get_serializer_context()).data
+
         return Response({
-            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "user": usr,
             "token": token[1]
         })
 
@@ -37,9 +41,15 @@ class LoginAPI(KnoxLoginView):
         user = serializer.validated_data['user']
 
         login(request, user)
+        sendEmails(request, "Login", "Logged in successfully")
+
 
         obj = super(LoginAPI, self).post(request, format=None)
-        obj.data['user'] = UserSerializer(user).data
+        usr = UserSerializer(user).data
+        complainant = Complainant.objects.get(user__id=usr.get("id"))
+
+        obj.data['user'] = usr
+        obj.data['complainant'] = complainant.id
 
         return Response(obj.data)
 
@@ -50,6 +60,7 @@ class ComplainantAPI(generics.RetrieveUpdateAPIView):
     
     def get_object(self):
         return self.request.user
+        # sendEmails(request, "Complaint Submission", "Your Complaint has been submitted successfully. We will notify you once it has been acted upon")
 
 
 class UserAPI(generics.RetrieveUpdateAPIView):

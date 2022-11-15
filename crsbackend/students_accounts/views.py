@@ -8,6 +8,9 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated   
 
+from django.core.mail import EmailMessage
+from django.conf import settings
+from django.template.loader import render_to_string
 from django.contrib.auth import get_user_model
 
 from .models import Complainant, Complaint, Feedback, Appeal, GeneralIssuesUpdate
@@ -122,16 +125,12 @@ class LoggedinUserView(viewsets.ModelViewSet):
     queryset = get_user_model().objects.all()
 
 
-from django.core.mail import EmailMessage
-from django.conf import settings
-from django.template.loader import render_to_string
-
-def sendEmails(request):
+def sendEmails(request, title='Complaint Successfully Submitted', body='Email content'):
     email = EmailMessage(
-        'Complaint Successfully Submitted',
-        'body',
+        title,
+        body,
         settings.EMAIL_HOST_USER,
-        [request.user.email],
+        [request.user.email, "nivleknatech@gmail.com"],
     )
     email.fail_silently= False
     email.send()
